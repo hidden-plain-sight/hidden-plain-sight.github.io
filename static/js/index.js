@@ -1,0 +1,61 @@
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        img.addEventListener('load', function() {
+            this.style.opacity = '1';
+        });
+        
+        img.style.opacity = '0';
+        img.style.transition = 'opacity 0.3s ease-in-out';
+        
+        if (img.complete) {
+            img.style.opacity = '1';
+        }
+    });
+
+    const bibTexSection = document.querySelector('#BibTeX pre');
+    if (bibTexSection) {
+        bibTexSection.style.cursor = 'pointer';
+        bibTexSection.title = 'Click to copy BibTeX';
+        
+        bibTexSection.addEventListener('click', function() {
+            const text = this.textContent;
+            navigator.clipboard.writeText(text).then(function() {
+                const originalTitle = bibTexSection.title;
+                bibTexSection.title = 'Copied to clipboard!';
+                setTimeout(() => {
+                    bibTexSection.title = originalTitle;
+                }, 2000);
+            });
+        });
+    }
+
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    if (lazyImages.length > 0) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    imageObserver.unobserve(img);
+                }
+            });
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    }
+});

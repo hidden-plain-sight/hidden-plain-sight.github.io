@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta property="og:title" content="Hidden in plain sight: VLMs overlook their visual representations"/>
+  <meta property="og:url" content="https://hidden-plain-sight.github.io/"/>
+  <meta property="og:image" content="figures/main_results.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+  
+  <meta name="keywords" content="vision language models, computer vision, machine learning, multimodal AI, VLM, COLM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Hidden in plain sight: VLMs overlook their visual representations</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Hidden in plain sight: <br/> VLMs overlook their visual representations</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://stephanie-fu.github.io/">Stephanie Fu</a>,
+              <a href="https://tzler.github.io/">Tyler Bonnen</a>,
+              <a href="https://www.devinguillory.com/">Devin Guillory</a>,
+              <a href="https://people.eecs.berkeley.edu/~trevor/">Trevor Darrell</a>
+            </span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block">UC Berkeley</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="paper.pdf" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+                </span>
+                <span>Paper</span>
+              </a>
+              </span>
+
+              <span class="link-block">
+                <a href="poster.pdf" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+                </span>
+                <span>Poster</span>
+              </a>
+              </span>
+
+              <span class="link-block">
+                <a href="#" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="ai ai-arxiv"></i>
+                </span>
+                <span>arXiv (Coming Soon)</span>
+              </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="figures/teaser.png" class="center-image"/>
+      <img src="figures/main_results.png" class="center-image"/>
+      <h2 class="subtitle has-text-centered">
+        <strong>Vision Language Models (VLMs) perform substantially worse than their visual encoders on vision-centric tasks</strong>, often dropping to near-chance performance despite having access to powerful visual representations.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section abstract">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Language provides a natural interface to specify and evaluate performance on visual tasks. 
+            To realize this possibility, vision language models (VLMs) must successfully integrate visual and linguistic information.
+            Our work compares VLMs to a direct readout of their visual encoders to understand their ability to integrate across these modalities. 
+            Across a series of vision-centric benchmarks (e.g., depth estimation, correspondence), we find that VLMs perform substantially worse than their visual encoders, dropping to near-chance performance. 
+            We investigate these results through a series of analyses across the entire VLM: namely 1) the degradation of vision representations, 2) brittleness to task prompt, and 3) the language model's role in solving the task. 
+            We find that the bottleneck in performing these vision-centric tasks lies in this third category; VLMs are not effectively using visual information easily accessible throughout the <em>entire</em> model, and they inherit their language biases. 
+            Our work helps diagnose the failure modes of open-source VLMs, and presents a series of evaluations useful for future investigations into visual understanding within VLMs.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 hyp1">Hypothesis 1: Vision representations degrade throughout the VLM.</h2>
+        
+        <div class="content has-text-justified">
+          <img src="figures/layer_analysis.png" class="center-image"/>
+          <p>
+            <strong class="hyp1">Not exactly.</strong> 
+            Visual representations remain accessible and effective throughout the entire model, 
+            suggesting that the bottleneck lies in the language model's ability to utilize these representations 
+            rather than in their degradation across layers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 hyp2">Hypothesis 2: The poor performance is coming from prompt sensitivity.</h2>
+        
+        <div class="content has-text-justified">
+          <img src="figures/softprompt.png" class="center-image"/>
+          <p>
+            <strong class="hyp2">Prompt-tuning with prefix embeddings helps some, but is not the answer.</strong> 
+            We tune [1, 5, 10] prefix embeddings and compare results with the original performance (x=0) and visual evaluation ceiling (dotted line). We observe minimal returns that diminish after 1-5 prefix embeddings.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 hyp3">Hypothesis 3: The LLM underutilizes its vision representations.</h2>
+        
+        <div class="content has-text-justified">
+          <img src="figures/ft.png" class="center-image"/>
+          <p>
+            <strong class="hyp3">The LLM component is the primary bottleneck.</strong> 
+            When fine-tuning each component of the VLM separately (vision encoder, projector, or LLM), 
+            we find that fine-tuning the LLM 1) provides the most substantial improvements in performance; 
+            2) best overcomes the language biases in outputting multiple choice answers; and 3) best improves attention over images;
+            suggesting that the VLM's performance bottleneck lies in the language model's ability to interpret visual representations.
+            <br/>
+            <h3 class="last-text hyp3">The vision representations in VLMs can be powerful, but are often hidden in plain sight!</h3>
+            <h3 class="last-text">Check out our paper to see more evaluations and analysis.</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{placeholder}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
