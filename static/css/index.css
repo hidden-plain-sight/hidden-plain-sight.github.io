@@ -147,7 +147,7 @@ body {
   border: none;
 }
 
-#BibTeX pre {
+#BibTeX .citation {
   background-color: #f8f9fa;
   padding: 1.5rem;
   border-radius: 8px;

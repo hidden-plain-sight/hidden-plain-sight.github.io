@@ -26,18 +26,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    const bibTexSection = document.querySelector('#BibTeX pre');
+    const bibTexSection = document.querySelector('#BibTeX .citation');
+    const bibTexTitle = document.querySelector('#BibTeX .label');
     if (bibTexSection) {
         bibTexSection.style.cursor = 'pointer';
-        bibTexSection.title = 'Click to copy BibTeX';
+        bibTexTitle.innerHTML = 'Click to copy citation';
         
         bibTexSection.addEventListener('click', function() {
             const text = this.textContent;
             navigator.clipboard.writeText(text).then(function() {
-                const originalTitle = bibTexSection.title;
-                bibTexSection.title = 'Copied to clipboard!';
+                const originalTitle = bibTexTitle.innerHTML;
+                bibTexTitle.innerHTML = '📝 Copied to clipboard!';
                 setTimeout(() => {
-                    bibTexSection.title = originalTitle;
+                    bibTexTitle.innerHTML = originalTitle;
                 }, 2000);
             });
         });
